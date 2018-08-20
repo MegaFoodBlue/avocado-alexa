@@ -1,0 +1,624 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "mega food",
+      "intents": [
+        {
+          "name": "BeautySkin",
+          "slots": [
+            {
+              "name": "next",
+              "type": "NEXT_SLOT"
+            },
+            {
+              "name": "previous",
+              "type": "PREVIOUS_SLOT"
+            }
+          ],
+          "samples": [
+            "what supplements should i take to have beautiful hair",
+            "what supplement should i take to clear my skin",
+            "what should i take to take care of my skin",
+            "supplements for beauty",
+            "strengthen my nails",
+            "my skin feels dry",
+            "my nails feel brittle",
+            "my hair is thinning",
+            "my hair could be better",
+            "my fingernails could use some help",
+            "improve my hair",
+            "i want to look good",
+            "i want to improve my skin",
+            "i want to have better hair",
+            "i want to get back my glow",
+            "i want to be radiant",
+            "i want clearer skin",
+            "how can i improve the health of my nails and hair"
+          ]
+        },
+        {
+          "name": "HealthyAgingNext",
+          "samples": [
+            "witch to the next",
+            "show me the next page",
+            "show me the following results",
+            "show me the follow result",
+            "show me next",
+            "read the next results",
+            "read the next result",
+            "next page",
+            "next",
+            "go to the next page",
+            "go forward",
+            "following result",
+            "follow result"
+          ]
+        },
+        {
+          "name": "SportNext",
+          "samples": [
+            "witch to the next",
+            "show me the next page",
+            "show me the following results",
+            "show me the follow result",
+            "show me next",
+            "read the next results",
+            "read the next result",
+            "next page",
+            "next",
+            "go to the next page",
+            "go forward",
+            "following result",
+            "follow result"
+          ]
+        },
+        {
+          "name": "SleepStressNext",
+          "samples": [
+            "witch to the next",
+            "show me the next page",
+            "show me the following results",
+            "show me the follow result",
+            "show me next",
+            "read the next results",
+            "read the next result",
+            "next page",
+            "next",
+            "go to the next page",
+            "go forward",
+            "following result",
+            "follow result"
+          ]
+        },
+        {
+          "name": "PrenatalPostnatal",
+          "samples": [
+            "i am breastfeeding",
+            "i am going to have a baby",
+            "i am pregnant",
+            "i want my baby to have all the nutrient it need",
+            "i want my baby to have all the nutrients it needs",
+            "i want to have a good pregnancy",
+            "i want to improve my breastfeed",
+            "i want to improve my breastfeeding",
+            "i want to improve my pregnancy",
+            "my wife is pregnant"
+          ]
+        },
+        {
+          "name": "SleepStressPrevious",
+          "samples": [
+            "back",
+            "go back",
+            "go back to previous result",
+            "go back to previous results",
+            "go to the previous page",
+            "previous",
+            "previous page",
+            "previous result",
+            "previous results",
+            "read out the previous result",
+            "read out the previous results",
+            "return to previous page",
+            "return to the previous"
+          ]
+        },
+        {
+          "name": "BoneHealthNext",
+          "samples": [
+            "witch to the next",
+            "show me the next page",
+            "show me the following results",
+            "show me the follow result",
+            "show me next",
+            "read the next results",
+            "read the next result",
+            "next page",
+            "next",
+            "go to the next page",
+            "go forward",
+            "following result",
+            "follow result"
+          ]
+        },
+        {
+          "name": "DefaultSupplements",
+          "samples": [
+            "what product do you recommend",
+            "what products do you recommend",
+            "what supplement should i take",
+            "what supplements should i take",
+            "which of megafood s product are best",
+            "which of megafood's products are best"
+          ]
+        },
+        {
+          "name": "PrenatalPostnatalNext",
+          "samples": [
+            "witch to the next",
+            "show me the next page",
+            "show me the following results",
+            "show me the follow result",
+            "show me next",
+            "read the next results",
+            "read the next result",
+            "next page",
+            "next",
+            "go to the next page",
+            "go forward",
+            "following result",
+            "follow result"
+          ]
+        },
+        {
+          "name": "ImmunePrevious",
+          "samples": [
+            "back",
+            "go back",
+            "go back to previous result",
+            "go back to previous results",
+            "go to the previous page",
+            "previous",
+            "previous page",
+            "previous result",
+            "previous results",
+            "read out the previous result",
+            "read out the previous results",
+            "return to previous page",
+            "return to the previous"
+          ]
+        },
+        {
+          "name": "SportPrevious",
+          "samples": [
+            "back",
+            "go back",
+            "go back to previous result",
+            "go back to previous results",
+            "go to the previous page",
+            "previous",
+            "previous page",
+            "previous result",
+            "previous results",
+            "read out the previous result",
+            "read out the previous results",
+            "return to previous page",
+            "return to the previous"
+          ]
+        },
+        {
+          "name": "BoneHealth",
+          "samples": [
+            "a family member has osteoporosis.",
+            "bone loss",
+            "i am post menoposal",
+            "i am prone to falling",
+            "i broke my hip.",
+            "i have broken many bones",
+            "i have fractured my bones",
+            "i have low bone mass",
+            "i want to strengthen my bones",
+            "i want to take care of my bones",
+            "low bone mineral density",
+            "my bones hurt",
+            "small bones",
+            "t-score",
+            "yeah i would like to know what i can do to be able to have my bones being stronger"
+          ]
+        },
+        {
+          "name": "SleepStress",
+          "samples": [
+            "i am freaking out",
+            "i am having difficulties going to sleep",
+            "i am not resting",
+            "i am not sleeping well",
+            "i am stressed",
+            "i want to achieve balance",
+            "i want to be more relaxed",
+            "i want to have better cognitive function i want to be more awake",
+            "i want to improve my rest",
+            "i want to relax",
+            "i want to relieve stress",
+            "i want to sleep better"
+          ]
+        },
+        {
+          "name": "KidsHealthNext",
+          "samples": [
+            "witch to the next",
+            "show me the next page",
+            "show me the following results",
+            "show me the follow result",
+            "show me next",
+            "read the next results",
+            "read the next result",
+            "next page",
+            "next",
+            "go to the next page",
+            "go forward",
+            "following result",
+            "follow result"
+          ]
+        },
+        {
+          "name": "Immune",
+          "samples": [
+            "i don't want to get sick",
+            "i get sick regularly",
+            "i have been getting sick to often",
+            "i want to be healthier",
+            "i want to boost my immune system",
+            "i want to detox",
+            "i want to improve my overall health",
+            "i've been getting sick a lot you help me with that"
+          ]
+        },
+        {
+          "name": "Sport",
+          "samples": [
+            "i am doing allot of exercise",
+            "i am going to start an exercise program",
+            "i want to improve my performance in sport",
+            "i want to improve my performance in sports",
+            "i want to improve my training",
+            "i want to participate in iron man",
+            "i want to reach maximum performance in sport",
+            "i want to reach maximum performance in sports",
+            "i want to run a marathon",
+            "i want to up my game"
+          ]
+        },
+        {
+          "name": "Digestive",
+          "samples": [
+            "i am a bit gassy",
+            "i am a bite gassy",
+            "i am constipate",
+            "i am constipated",
+            "i am going on a vacation",
+            "i am travel abroad",
+            "i am travelling abroad",
+            "i feel bloat",
+            "i feel bloated",
+            "i have a lot of reflux",
+            "i have allot of reflux",
+            "i have gas",
+            "i have problem going to the bathroom",
+            "i have problems going to the bathroom",
+            "i want to care for my digestive tract",
+            "i want to care for my digestive tract",
+            "i want to have more regular bowel movement",
+            "i want to have more regular bowel movements",
+            "i want to improve my digestion",
+            "i want to take care of my stomach",
+            "i want to take care of my digestive system"
+          ]
+        },
+        {
+          "name": "DigestivePrevious",
+          "samples": [
+            "back",
+            "go back",
+            "go back to previous result",
+            "go back to previous results",
+            "go to the previous page",
+            "previous",
+            "previous page",
+            "previous result",
+            "previous results",
+            "read out the previous result",
+            "read out the previous results",
+            "return to previous page",
+            "return to the previous"
+          ]
+        },
+        {
+          "name": "BeautySkinPrevious",
+          "samples": [
+            "back",
+            "go back",
+            "go back to previous result",
+            "go back to previous results",
+            "go to the previous page",
+            "previous",
+            "previous page",
+            "previous result",
+            "previous results",
+            "read out the previous result",
+            "read out the previous results",
+            "return to previous page",
+            "return to the previous"
+          ]
+        },
+        {
+          "name": "DigestiveNext",
+          "samples": [
+            "switch to the next",
+            "show me the next page",
+            "show me the following results",
+            "show me the follow result",
+            "show me next",
+            "read the next results",
+            "read the next result",
+            "next page",
+            "next",
+            "go to the next page",
+            "go forward",
+            "following result",
+            "follow result"
+          ]
+        },
+        {
+          "name": "ImmuneNext",
+          "samples": [
+            "switch to the next",
+            "show me the next page",
+            "show me the following results",
+            "show me the follow result",
+            "show me next",
+            "read the next results",
+            "read the next result",
+            "next page",
+            "next",
+            "go to the next page",
+            "go forward",
+            "following result",
+            "follow result"
+          ]
+        },
+        {
+          "name": "KidsHealthPrevious",
+          "samples": [
+            "back",
+            "go back",
+            "go back to previous result",
+            "go back to previous results",
+            "go to the previous page",
+            "previous",
+            "previous page",
+            "previous result",
+            "previous results",
+            "read out the previous result",
+            "read out the previous results",
+            "return to previous page",
+            "return to the previous"
+          ]
+        },
+        {
+          "name": "HealthyAgingPrevious",
+          "samples": [
+            "back",
+            "go back",
+            "go back to previous result",
+            "go back to previous results",
+            "go to the previous page",
+            "previous",
+            "previous page",
+            "previous result",
+            "previous results",
+            "read out the previous result",
+            "read out the previous results",
+            "return to previous page",
+            "return to the previous"
+          ]
+        },
+        {
+          "name": "EnergyNext",
+          "samples": [
+            "witch to the next",
+            "show me the next page",
+            "show me the following results",
+            "show me the follow result",
+            "show me next",
+            "read the next results",
+            "read the next result",
+            "next page",
+            "next",
+            "go to the next page",
+            "go forward",
+            "following result",
+            "follow result"
+          ]
+        },
+        {
+          "name": "Energy",
+          "samples": [
+            "i am tired all the time",
+            "i feel drained",
+            "i suffer from anxiety",
+            "i want to be more focused",
+            "i want to have more energy",
+            "i want to improve my physical and mental state",
+            "i want to increase my iron levels",
+            "i want to stay active",
+            "my energy levels are low"
+          ]
+        },
+        {
+          "name": "EnergyPrevious",
+          "samples": [
+            "back",
+            "go back",
+            "go back to previous result",
+            "go back to previous results",
+            "go to the previous page",
+            "previous",
+            "previous page",
+            "previous result",
+            "previous results",
+            "read out the previous result",
+            "read out the previous results",
+            "return to previous page",
+            "return to the previous"
+          ]
+        },
+        {
+          "name": "KidsHealth",
+          "samples": [
+            "i have child",
+            "i have children",
+            "i want my child to have a proper development",
+            "i want my children to have a proper development",
+            "i want my kids to be better nourished",
+            "i want my son to be healthier",
+            "i want to attend to my child s wellbeing",
+            "i want to attend to my children's wellbeing",
+            "my daughter is with a cold all the time",
+            "my kid gets sick often",
+            "my kid is with a runny nose",
+            "my kids are way to distracted"
+          ]
+        },
+        {
+          "name": "BeautySkinNext",
+          "samples": [
+            "switch to the next",
+            "show me the next page",
+            "show me the following results",
+            "show me the follow result",
+            "show me next",
+            "read the next results",
+            "read the next result",
+            "next page",
+            "next",
+            "go to the next page",
+            "go forward",
+            "following result",
+            "follow result"
+          ]
+        },
+        {
+          "name": "BoneHealthPrevious",
+          "samples": [
+            "back",
+            "go back",
+            "go back to previous result",
+            "go back to previous results",
+            "go to the previous page",
+            "previous",
+            "previous page",
+            "previous result",
+            "previous results",
+            "read out the previous result",
+            "read out the previous results",
+            "return to previous page",
+            "return to the previous"
+          ]
+        },
+        {
+          "name": "DefaultWelcomeIntent",
+          "samples": []
+        },
+        {
+          "name": "PrenatalPostnatalPrevious",
+          "samples": [
+            "back",
+            "go back",
+            "go back to previous result",
+            "go back to previous results",
+            "go to the previous page",
+            "previous",
+            "previous page",
+            "previous result",
+            "previous results",
+            "read out the previous result",
+            "read out the previous results",
+            "return to previous page",
+            "return to the previous"
+          ]
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": [
+            "cancel"
+          ]
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": [
+            "help",
+            "huh",
+            "what do you do"
+          ]
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": [
+            "goodbye",
+            "exit",
+            "bye",
+            "see you",
+            "see ya",
+            "adios",
+            "close"
+          ]
+        },
+        {
+          "name": "AMAZON.PauseIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ResumeIntent",
+          "samples": []
+        }
+      ],
+      "types" : [
+        {
+          "name": "NEXT_SLOT",
+          "values" : [
+            {
+              "name" :{
+                "value": "next"
+              }
+            },
+            {
+              "name" :{
+                "value": "switch to the next"
+              }
+            }
+          ]
+        },
+        {
+          "name": "PREVIOUS_SLOT",
+          "values" : [
+            {
+              "name" :{
+                "value": "previous"
+              }
+            },
+            {
+              "name" :{
+                "value": "go back"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
