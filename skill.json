@@ -3,22 +3,55 @@
     "publishingInformation": {
       "locales": {
         "en-US": {
-          "name": "Avocado"
+          "summary": "MegaFood's Wellness assistant helps you find the perfect supplements to achieve your wellness goals.",
+          "examplePhrases": [
+            "Alexa, Open Mega food",
+            "Alexa, ask mega food what can I do to boost my immune system?",
+            "Alexa, ask mega food what supplements should I take?"
+          ],
+          "keywords": [
+            "Supplements"
+          ],
+          "name": "Megafood's Wellness Assistant",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/4a3e/345493110be14aef90f71736bbf96ca2/APP_ICON?versionId=NfAefe165qVzrZHouVLu0lF8v_OjBRkD&AWSAccessKeyId=AKIAIEYXX6DHY7O4XWMA&Expires=1534978025&Signature=ksj41zMaBE8fGQNexkHJfQg%2FO%2BA%3D",
+          "description": "MegaFood was founded with one goal — to improve people’s lives by delivering the most authentic nourishment possible. Our mission has always been to produce superior whole food supplements for those who care about their health and well-being.\n\n* MegaFood's Wellness assistant is not a substitute for the advice of a medical professional, if you are ill or need medical advice, please talk to your doctor.",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/dad2/b02b766e57ca433cbfced76ed532a9ca/APP_ICON_LARGE?versionId=X17sL0lNrpMw_wJiBaM0NWZwhr1URyOE&AWSAccessKeyId=AKIAIEYXX6DHY7O4XWMA&Expires=1534978025&Signature=Hs%2FcrEPysOEQHvJ%2F1j22JEILdVs%3D"
         }
-      }
+      },
+      "isAvailableWorldwide": false,
+      "testingInstructions": "There are no special instructions. No additional requirements.",
+      "category": "HEALTH_AND_FITNESS",
+      "distributionCountries": [
+        "US"
+      ]
     },
     "apis": {
       "custom": {
         "endpoint": {
-          "sourceDir": "./lambda/us-east-1_alexaFulfillment"
+          "uri": "arn:aws:lambda:us-east-1:113011783938:function:alexaFulfillment"
         },
         "interfaces": [
           {
             "type": "AUDIO_PLAYER"
+          },
+          {
+            "type": "CAN_FULFILL_INTENT_REQUEST"
           }
         ]
       }
     },
-    "manifestVersion": "1.0"
+    "manifestVersion": "1.0",
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "locales": {
+        "en-US": {
+          "privacyPolicyUrl": "https://www.megafood.com/customer-support/privacy-policy.html"
+        }
+      },
+      "isExportCompliant": true,
+      "containsAds": false,
+      "isChildDirected": false,
+      "usesPersonalInfo": false
+    }
   }
 }
