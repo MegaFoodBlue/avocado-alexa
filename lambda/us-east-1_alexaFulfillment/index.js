@@ -1,6 +1,10 @@
 
 /* jshint node: true */
 
+/* eslint-disable  func-names */
+/* eslint-disable  no-console */
+/*jshint esversion: 6 */
+
 'use strict';
 
 const Alexa = require('ask-sdk');
@@ -14,12 +18,6 @@ const RequestLog = {
               return;
        }
 };
-
-const ResponseLog = {
-       process(){
-
-       }
-}
 
 const LaunchRequestHandler = {
        canHandle(handlerInput){
@@ -399,21 +397,56 @@ const KidsHealthHandler = {
        }
 };
 
-
 const DefaultSupplementsHandler = {
        canHandle(handlerInput){
-              return handlerInput.requestEnvelope.request.type === "IntentRequest" &&
+              return handlerInput.requestEnvelope.request.type === "CanFulfillIntentRequest" &&
                      handlerInput.requestEnvelope.request.intent.name === "DefaultSupplements";
        },
        handle(handlerInput, error) {
 
-              let speech = build.randomWelcome();
               let attributes = handlerInput.attributesManager.getSessionAttributes();
+              const intentName = handlerInput.requestEnvelope.request.intent.name;
+              const filledSlots = handlerInput.requestEnvelope.request.intent.slots;
+              const slotValues = build.getSlotValues(filledSlots);
+              const resolvedValues = build.getResolvedValues(handlerInput.requestEnvelope, "wellnessgoals");
+              console.log(resolvedValues[0].value.name);
+              const wellnessgoals = resolvedValues[0].value.name;
+              let speech = build.goalsAlexa(wellnessgoals);
 
-              attributes.wellnessGoal = undefined;
+              attributes.wellnessGoal = wellnessgoals;
               attributes.index = 0;
 
-              console.log('IN DefaultSupplementsHandler v2 ----------------------------------------');
+              console.log('IN DefaultSupplementsHandler v2 ---------------------------------------- '+ JSON.stringify(slotValues));
+
+              if (slotValues.wellnessgoals.isValidated) {
+                     console.log ("in DefaultSupplements AboutIntentHandler YES");
+                     return handlerInput.responseBuilder
+                            .withCanFulfillIntent(
+                                   {
+                                          "canFulfill": "YES",
+                                          "slots":{
+                                                 "wellnessgoals": {
+                                                        "canUnderstand": "YES",
+                                                        "canFulfill": "YES"
+                                                 }
+                                          }
+                                   })
+                            .getResponse();
+              } else {
+                     console.log ("in CFIR AboutIntentHandler canFulfill == NO");
+                     return handlerInput.responseBuilder
+                            .withCanFulfillIntent(
+                                   {
+                                          "canFulfill": "YES",
+                                          "slots":{
+                                                 "wellnessgoals": {
+                                                        "canUnderstand": "YES",
+                                                        "canFulfill": "NO"
+                                                 }
+                                          }
+                                   })
+                            .getResponse();
+              }
 
               return handlerInput.responseBuilder
                      .speak(speech)
@@ -435,7 +468,7 @@ const HealthyAgingHandler = {
               let gender = build.getResolvedValues(handlerInput.requestEnvelope, "Gender");
 
               let params = {
-                'user-gender' : gender,
+                'Gender' : gender,
                 'Age' : age
               };
 
@@ -443,7 +476,7 @@ const HealthyAgingHandler = {
               attributes.index = 0;
 
 
-              await build.goalsAlexa('HealthyAging', 0, params)
+              await build.goalsAlexa('HealthyAging', 0, params, attributes)
                      .then(value => {
                             console.log(value);
                             speech = value;
@@ -455,6 +488,81 @@ const HealthyAgingHandler = {
                      .getResponse();
        }
 };
+
+const ProductInfoHandler = {
+       canHandle(handlerInput) {
+              return handlerInput.requestEnvelope.request.type === "IntentRequest" &&
+                     handlerInput.requestEnvelope.request.intent.name === "ProductInfo";
+       },
+       handle(handlerInput, error) {
+
+              console.log("IN ProductInfo HANDLER");
+
+              let attributes = handlerInput.attributesManager.getSessionAttributes();
+              let infoRequired = '';
+              let infoString = "";
+
+              const spokenValue = build.getSpokenValue(handlerInput.requestEnvelope, "product");
+              const resolvedValues = build.getResolvedValues(handlerInput.requestEnvelope, "product");
+              const productInfo = build.getResolvedValues(handlerInput.requestEnvelope, "Info");
+
+              console.log(productInfo[0].value.name + '<--------- Product Info asked for.');
+              //NO MATCHES FOUND
+              if (resolvedValues === undefined)
+              {
+                     return handlerInput.responseBuilder
+                            .speak("I wasn't able to find a match for " + spokenValue + ". " + build.randomWelcome())
+                            .reprompt("I wasn't able to find a match for " + spokenValue + ". " + build.randomWelcome())
+                            .getResponse();
+              }
+              //ONLY ONE MATCH FOUND
+              else if (resolvedValues)
+              {
+                     const filter = "&filterByFormula=%7BProduct%20Name%7D%3D%22" + encodeURIComponent(resolvedValues[0].value.name) + "%22";
+
+                     return new Promise((resolve) => {
+                            build.airtableGet("appYIWwhiy9nhnrww", "Master%20Products", filter, (record) => {
+                                   console.log("AIRTABLE RECORD = " + JSON.stringify(record));
+
+                                   if(attributes.disambiguation){
+                                          attributes.disambiguation = false;
+                                          infoRequired = attributes.infoRequired
+                                   } else if (!attributes.disambiguation){
+                                          infoRequired = productInfo[0].value.name;
+                                          attributes.infoRequired = infoRequired;
+                                          infoString = record.records[0].fields[infoRequired];
+                                   }
+                                   let sanitized = infoString.replace(/&/gi,'and');
+
+                                   console.log(sanitized);
+                                   let speechText = "The " + infoRequired + " for " + spokenValue + " is:  <break time='.5s'/>" + sanitized + build.randomWelcome();
+
+                                   console.log("RESPONSE BUILDER = " + JSON.stringify(handlerInput.responseBuilder));
+
+                                   resolve(handlerInput.responseBuilder
+                                          .speak(speechText)
+                                          .reprompt(build.randomWelcome())
+                                          .getResponse());
+                            });
+                     });
+              }
+              //MORE THAN ONE MATCH FOUND.  DISAMBIGUATE.
+              /*else if (resolvedValues.length > 1)
+              {
+                     let valuesString = build.getValuesString(resolvedValues);
+                     console.log('Sanitized string: ----->'+valuesString);
+
+                     attributes.disambiguation = true;
+                     infoRequired = productInfo[0].value.name;
+                     attributes.infoRequired = infoRequired;
+
+                     return handlerInput.responseBuilder
+                            .speak("You asked me about " + spokenValue + ", and I found multiple answers.  Would you like to know about: " + valuesString + "?")
+                            .reprompt("Would you like to know about: " + valuesString + "?")
+                            .getResponse();
+              }*/
+       }
+}
 
 exports.handler = Alexa.SkillBuilders.custom()
        .addRequestHandlers(
@@ -472,6 +580,7 @@ exports.handler = Alexa.SkillBuilders.custom()
               KidsHealthHandler,
               DefaultSupplementsHandler,
               HealthyAgingHandler,
+              ProductInfoHandler,
               HelpHandler,
               StopHandler,
               SessionEndedHandler

@@ -2,14 +2,16 @@
 'use strict';
 
 const rich = require('../lib/rich-responses');
+const https = require('https');
+const secret = require('../lib/secret');
 
 
-exports.goalsAlexa = (goal, index, params)=>{
+exports.goalsAlexa = (goal, index, params, attributes)=>{
        return new Promise((resolve, reject)=>{
               if(!params){
                      params = {};
               }
-              let data = rich.getResponses(goal, params);
+              let data = rich.getResponses(goal, params, attributes);
               let simpleResponse = data.richResponse.items[0].simpleResponse.textToSpeech;
               let products = data.richResponse.items[1].carouselBrowse.items;
               let length = products.length;
@@ -34,6 +36,12 @@ exports.goalsAlexa = (goal, index, params)=>{
                      //resolve(conv);
               }
        });
+};
+
+exports.randomCFI = () => {
+       let questions = ['What are your health goals?', 'we can start by telling me your age and gender?', 'What are your wanting to upgrade with your health?'];
+       let random = getRandom(0, questions.length-1);
+       return "<break time='.5s'/>" + questions[random];
 };
 
 exports.randomWelcome = ()=>{
@@ -84,7 +92,97 @@ exports.getResolvedValues = (envelope, slotName) =>
               }
        };
 
+exports.getSlotValues = (filledSlots) => {
+       const slotValues = {};
+
+       console.log(`The filled slots: ${JSON.stringify(filledSlots)}`);
+       Object.keys(filledSlots).forEach((item) => {
+              const name = filledSlots[item].name;
+              if (filledSlots[item] &&
+                     filledSlots[item].resolutions &&
+                     filledSlots[item].resolutions.resolutionsPerAuthority[0] &&
+                     filledSlots[item].resolutions.resolutionsPerAuthority[0].status &&
+                     filledSlots[item].resolutions.resolutionsPerAuthority[0].status.code) {
+                     switch (filledSlots[item].resolutions.resolutionsPerAuthority[0].status.code) {
+                            case 'ER_SUCCESS_MATCH':
+                                   slotValues[name] = {
+                                          synonym: filledSlots[item].value,
+                                          value: filledSlots[item].resolutions.resolutionsPerAuthority[0].values[0].value.name,
+                                          id: filledSlots[item].resolutions.resolutionsPerAuthority[0].values[0].value.id,
+                                          isValidated: true
+                                   };
+                                   break;
+                            case 'ER_SUCCESS_NO_MATCH':
+                                   slotValues[name] = {
+                                          synonym: filledSlots[item].value,
+                                          value: filledSlots[item].value,
+                                          id: null,
+                                          isValidated: false,
+                                   };
+                                   break;
+                            default:
+                                   break;
+                     }
+              } else {
+                     slotValues[name] = {
+                            synonym: filledSlots[item].value,
+                            value: filledSlots[item].value,
+                            id: filledSlots[item].id,
+                            isValidated: false
+                     };
+              }
+       }, this);
+
+       return slotValues;
+};
+
 function getRandom(min, max) {
        return Math.floor(Math.random() * (max-min+1)+min);
+}
+
+exports.airtableGet = (base, table, filter, callback)=> {
+       console.log("IN AIRTABLE GET");
+       console.log("BASE = " + base);
+       console.log("TABLE = " + table);
+       console.log("FILTER = " + filter);
+
+       let options = {
+              host: "api.airtable.com",
+              port: 443,
+              path: "/v0/" + base + "/" + table + "?api_key="+secret.AIRTABLE_API_KEY + filter,
+              method: 'GET',
+       };
+
+       console.log("PATH = https://" + options.host + options.path);
+
+       let req = https.request(options, res => {
+              res.setEncoding('utf8');
+              let returnData = "";
+
+              res.on('data', chunk => {
+                     returnData = returnData + chunk;
+              });
+
+              res.on('end', () => {
+                     let data = JSON.parse(returnData);
+                     console.log("DATA = " + JSON.stringify(data));
+                     callback(data);
+              });
+       });
+       req.end();
+};
+
+exports.getValuesString = (values) =>
+{
+       var string = "";
+       for (var i = 0;i<values.length; i++)
+       {
+              if (i != 0) string += ", ";
+              if (i === (values.length-1)) string += " or ";
+              string += values[i].value.name;
+       }
+
+       let sanitized = string.replace(/&/gi,'and');
+       return sanitized;
 }
 

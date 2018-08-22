@@ -1173,8 +1173,9 @@ const womensHealth = {
  * @param params
  */
 
-exports.getResponses = (intent, params)=>{
+exports.getResponses = (intent, params, attributes)=>{
        let payload = {};
+       console.log(JSON.stringify(params));
 
        if (intent === 'Energy'){
               payload = energyRich;
@@ -1206,18 +1207,30 @@ exports.getResponses = (intent, params)=>{
        if(intent === 'Sport'){
               payload = sportRich;
        }
+       if(intent === 'mensHealth'){
+              payload = mensHealth;
+       }
+       if(intent === 'womensHealth'){
+              payload = womensHealth;
+       }
        let items = payload.richResponse.items[1].carouselBrowse.items;
 
-       if(params.hasOwnProperty('user-gender')){
-
-              payload.richResponse.items[1].carouselBrowse.items = filterParameter(items,'user-gender',params['user-gender']);
+       if(params.hasOwnProperty('Gender')){
+              let gender = params.Gender[0].value.name;
+              payload.richResponse.items[1].carouselBrowse.items = filterParameter(items,'user-gender',gender);
        }
-       if(params.hasOwnProperty('age')){
-              if(params.Age < 40 && params['user-gender'] === 'male'){
+       if(params.hasOwnProperty('Age')){
+              let gender = params.Gender[0].value.name;
+              console.log('We have age slot registered.  With gender: '+ gender);
+              if(params.Age < 40 && gender === 'male'){
+                     console.log('user is under 40 and male');
                payload = mensHealth;
+               attributes.wellnessGoal = 'mensHealth';
               }
-              if(params.Age < 40 && params['user-gender'] === 'female'){
+              if(params.Age < 40 && gender === 'female'){
+                     console.log('user is under 40 and female');
                      payload = womensHealth;
+                     attributes.wellnessGoal = 'womensHealth';
               }
        }
 
