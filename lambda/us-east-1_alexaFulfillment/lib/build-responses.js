@@ -8,14 +8,12 @@ const Airtable = require('airtable');
 
 const footer = 'This statement has not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease.';
 
-exports.goalsAlexa = (goal, index, params, attributes)=>{
+exports.goalsAlexa = (goal, index)=>{
        return new Promise((resolve, reject)=>{
-              if(!params){
-                     params = {};
-              }
               let data = {};
               airtableGetGoals(goal).then(records =>{
                      data = records;
+                     console.log(JSON.stringify(records,null,2));
                      let simpleResponse = data.richResponse.items[0].simpleResponse.textToSpeech;
                      let products = data.richResponse.items[1].carouselBrowse.items;
                      let length = products.length;
@@ -40,6 +38,10 @@ exports.goalsAlexa = (goal, index, params, attributes)=>{
                             //resolve(conv);
                      }
               })
+                     .catch((err =>{
+                            console.error(err);
+                            throw new Error(err);
+                     }));
        });
 };
 
@@ -90,7 +92,7 @@ exports.getResolvedValues = (envelope, slotName) =>
                      envelope.request.intent.slots[slotName].resolutions.resolutionsPerAuthority[0] &&
                      envelope.request.intent.slots[slotName].resolutions.resolutionsPerAuthority[0].values)
               {
-                     return envelope.request.intent.slots[slotName].resolutions.resolutionsPerAuthority[0].values;
+                     return envelope.request.intent.slots[slotName].resolutions.resolutionsPerAuthority[0].values[0].value.name;
               }
               else {
                      return undefined;
@@ -191,6 +193,48 @@ exports.getValuesString = (values) =>
        return sanitized;
 }
 
+exports.ageGenderSpecificity = (A, G) =>{
+
+
+       const age = A;
+       const gender = G[0].value.name;
+       console.log(age + gender + '<<<<<-------- from ageGenderSpecificity');
+       return new Promise(resolve => {
+              let goal = "";
+              if (age < 40 && gender === 'male') {
+                     goal = "MensHealth";
+                     console.log(goal);
+                     resolve(goal);
+              }
+              if (age >= 40 && age < 55 && gender === 'male') {
+                     goal = "HealthyAgingMen40";
+                     console.log(goal);
+                     resolve(goal);
+              }
+              if (age >= 55 && gender === 'male') {
+                     goal = "HealthyAgingMen55";
+                     console.log(goal);
+                     resolve(goal);
+              }
+              if (age < 40 && gender === 'female') {
+                     goal = "WomensHealth";
+                     console.log(goal);
+                     resolve(goal);
+              }
+              if (age >= 40 && age < 55 && gender === 'female') {
+                     console.log(goal);
+                     goal = "HealthyAgingWomen40";
+                     resolve(goal);
+              }
+              if (age >= 55 && gender === 'female') {
+                     console.log(goal);
+                     goal = "HealthyAgingWomen55";
+                     resolve(goal);
+              }
+       })
+
+};
+
 function airtableGetGoals (goal){
        const base = new Airtable({apiKey: secret.AIRTABLE_API_KEY}).base('apparAnxxgPKNtgws');
        let items = [];
@@ -210,7 +254,7 @@ function airtableGetGoals (goal){
               }
        };
        return new Promise((resolve,reject)=>{
-
+              console.log('getting products for : ' + goal);
               base(goal).select({
                      maxRecords: 10,
                      view: "Grid view"

@@ -463,39 +463,53 @@ const HealthyAgingHandler = {
        async handle(handlerInput, error) {
               console.log('IN HealthyAging HANDLER v2 ----------------------------------------');
               let speech = "";
-              let attributes = handlerInput.attributesManager.getSessionAttributes();
-              let age = build.getSpokenValue(handlerInput.requestEnvelope, "Age");
-              let gender = build.getResolvedValues(handlerInput.requestEnvelope, "Gender");
               let goal = "";
-              if(age< 40 && gender === 'male'){
-                     goal = "MensHealth";
-              }
-              if(age >= 40 && age < 55  && params['user-gender'] === 'male'){
-                     goal = "HealthyAgingMen40";
-              }
-              if(age >= 55 && gender === 'male'){
-                     goal = "HealthyAgingMen55";
-              }
-              if(age < 40 && gender === 'female'){
-                     goal = "WomensHealth";
-              }
-              if(age >= 40 && age < 55  && gender === 'female'){
-                     goal = "HealthyAgingWomen40";
-              }
-              if(age >= 55 && gender === 'female'){
-                     goal = "HealthyAgingWomen55";
-              }
+              let attributes = handlerInput.attributesManager.getSessionAttributes();
 
+              await new Promise(resolve => {
+                     let age = build.getSpokenValue(handlerInput.requestEnvelope, "Age");
+                     let gender = build.getResolvedValues(handlerInput.requestEnvelope, "Gender");
+                     if(age< 40 && gender === 'male'){
+                            goal = "MensHealth";
+                            resolve();
+                     }
+                     if(age >= 40 && age < 55  && gender === 'male'){
+                            goal = "HealthyAgingMen40";
+                            resolve();
+                     }
+                     if(age >= 55 && gender === 'male'){
+                            goal = "HealthyAgingMen55";
+                            resolve();
+                     }
+                     if(age < 40 && gender === 'female'){
+                            goal = "WomensHealth";
+                            resolve();
+                     }
+                     if(age >= 40 && age < 55  && gender === 'female'){
+                            goal = "HealthyAgingWomen40";
+                            resolve();
+                     }
+                     if(age >= 55 && gender === 'female'){
+                            goal = "HealthyAgingWomen55";
+                            resolve();
+                     }
+
+              });
 
               attributes.wellnessGoal = goal;
               attributes.index = 0;
 
 
-              await build.goalsAlexa(goal, 0, params, attributes)
+
+              await build.goalsAlexa(goal, 0)
                      .then(value => {
                             console.log(value);
                             speech = value;
-                     });
+                     })
+                     .catch((err =>{
+                            console.error(err);
+                            throw new Error(err);
+                     }));
 
               return handlerInput.responseBuilder
                      .speak(speech)
