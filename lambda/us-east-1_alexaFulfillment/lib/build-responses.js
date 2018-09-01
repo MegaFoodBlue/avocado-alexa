@@ -80,8 +80,7 @@ exports.getSpokenValue = (envelope, slotName) =>
               }
        };
 
-exports.getResolvedValues = (envelope, slotName) =>
-       {
+exports.getResolvedValues = (envelope, slotName) => {
               if (envelope &&
                      envelope.request &&
                      envelope.request.intent &&
@@ -179,8 +178,7 @@ exports.airtableGet = (base, table, filter, callback)=> {
        req.end();
 };
 
-exports.getValuesString = (values) =>
-{
+exports.getValuesString = (values) => {
        var string = "";
        for (var i = 0;i<values.length; i++)
        {
@@ -192,48 +190,6 @@ exports.getValuesString = (values) =>
        let sanitized = string.replace(/&/gi,'and');
        return sanitized;
 }
-
-exports.ageGenderSpecificity = (A, G) =>{
-
-
-       const age = A;
-       const gender = G[0].value.name;
-       console.log(age + gender + '<<<<<-------- from ageGenderSpecificity');
-       return new Promise(resolve => {
-              let goal = "";
-              if (age < 40 && gender === 'male') {
-                     goal = "MensHealth";
-                     console.log(goal);
-                     resolve(goal);
-              }
-              if (age >= 40 && age < 55 && gender === 'male') {
-                     goal = "HealthyAgingMen40";
-                     console.log(goal);
-                     resolve(goal);
-              }
-              if (age >= 55 && gender === 'male') {
-                     goal = "HealthyAgingMen55";
-                     console.log(goal);
-                     resolve(goal);
-              }
-              if (age < 40 && gender === 'female') {
-                     goal = "WomensHealth";
-                     console.log(goal);
-                     resolve(goal);
-              }
-              if (age >= 40 && age < 55 && gender === 'female') {
-                     console.log(goal);
-                     goal = "HealthyAgingWomen40";
-                     resolve(goal);
-              }
-              if (age >= 55 && gender === 'female') {
-                     console.log(goal);
-                     goal = "HealthyAgingWomen55";
-                     resolve(goal);
-              }
-       })
-
-};
 
 function airtableGetGoals (goal){
        const base = new Airtable({apiKey: secret.AIRTABLE_API_KEY}).base('apparAnxxgPKNtgws');
