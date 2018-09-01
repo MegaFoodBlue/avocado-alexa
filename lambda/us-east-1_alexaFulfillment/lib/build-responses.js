@@ -4,37 +4,42 @@
 const rich = require('../lib/rich-responses');
 const https = require('https');
 const secret = require('../lib/secret');
+const Airtable = require('airtable');
 
+const footer = 'This statement has not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease.';
 
 exports.goalsAlexa = (goal, index, params, attributes)=>{
        return new Promise((resolve, reject)=>{
               if(!params){
                      params = {};
               }
-              let data = rich.getResponses(goal, params, attributes);
-              let simpleResponse = data.richResponse.items[0].simpleResponse.textToSpeech;
-              let products = data.richResponse.items[1].carouselBrowse.items;
-              let length = products.length;
-              console.log('build single response is running with length of products ----->' + length + 'and index--->' + index);
-              if(index === 0){
-                     let product = products[index];
-                     console.log('case 2' + JSON.stringify(product));
-                     resolve(simpleResponse + '<break time=\'.5s\'/> ' + product.description + '.<break time=\'.5s\'/> You can say next to hear more.  Or say goodbye to close our conversation.' );
-              } else if(index < length){
-                     console.log('case 3 ---->'+length + index);
-                     let product = products[index];
-                     console.log(JSON.stringify(product));
-                     resolve(product.description + '. You can say next to hear more...  Or say goodbye to close our conversation.');
-              } else if(index === length){
-                     console.log('case 4 ----> last product');
-                     let product = products[index];
-                     console.log(JSON.stringify(product));
-                     resolve('This was the last product on this category. You can say previous to go back');
-              }
-              else {
-                     console.log('case 5');
-                     //resolve(conv);
-              }
+              let data = {};
+              airtableGetGoals(goal).then(records =>{
+                     data = records;
+                     let simpleResponse = data.richResponse.items[0].simpleResponse.textToSpeech;
+                     let products = data.richResponse.items[1].carouselBrowse.items;
+                     let length = products.length;
+                     console.log('build single response is running with length of products ----->' + length + 'and index--->' + index);
+                     if(index === 0){
+                            let product = products[index];
+                            console.log('case 2' + JSON.stringify(product));
+                            resolve(simpleResponse + '<break time=\'.5s\'/> ' + product.description + '.<break time=\'.5s\'/> You can say next to hear more.  Or say goodbye to close our conversation.' );
+                     } else if(index < length){
+                            console.log('case 3 ---->'+length + index);
+                            let product = products[index];
+                            console.log(JSON.stringify(product));
+                            resolve(product.description + '. You can say next to hear more...  Or say goodbye to close our conversation.');
+                     } else if(index === length){
+                            console.log('case 4 ----> last product');
+                            let product = products[index];
+                            console.log(JSON.stringify(product));
+                            resolve('This was the last product on this category. You can say previous to go back');
+                     }
+                     else {
+                            console.log('case 5');
+                            //resolve(conv);
+                     }
+              })
        });
 };
 
@@ -186,3 +191,61 @@ exports.getValuesString = (values) =>
        return sanitized;
 }
 
+function airtableGetGoals (goal){
+       const base = new Airtable({apiKey: secret.AIRTABLE_API_KEY}).base('apparAnxxgPKNtgws');
+       let items = [];
+       let payload = {
+              "richResponse" :{
+                     "items" : [
+                            {
+                                   "simpleResponse": {
+                                   }
+                            },
+                            {
+                                   "carouselBrowse" : {
+                                          "items" : [{}]
+                                   }
+                            }
+                     ]
+              }
+       };
+       return new Promise((resolve,reject)=>{
+
+              base(goal).select({
+                     maxRecords: 10,
+                     view: "Grid view"
+              }).eachPage(function page(records) {
+                     records.forEach(function(record) {
+                            if(record.get('title')=== 'General' ){
+                                   payload.richResponse.items[0].simpleResponse.textToSpeech = record.get('description');
+                            } else {
+                                   let description = '';
+                                   if (record.get('spoken description')){
+                                          description = record.get('spoken description');
+                                   } else {
+                                          description = record.get('description');
+                                   }
+                                   let item = {
+                                          "title" : record.get('title'),
+                                          "description": description,
+                                          "footer": footer,
+                                          "image" : {
+                                                 "url" : record.get('image'),
+                                                 "accessibilityText" : record.get('title')
+                                          },
+                                          "openUrlAction" : {
+                                                 "url" : record.get('openUrlAction')
+                                          }
+                                   };
+                                   items.push(item);
+                            }
+                     });
+                     payload.richResponse.items[1].carouselBrowse.items = items;
+                     resolve(payload);
+                     console.log("This is the payload processed by airtableGetGoals ----->"+JSON.stringify(payload, null, 2));
+              }, function done(err) {
+                     if (err) {console.error(err);}
+                     reject(err);
+              });
+       });
+}

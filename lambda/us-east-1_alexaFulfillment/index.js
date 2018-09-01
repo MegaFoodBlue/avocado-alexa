@@ -466,17 +466,32 @@ const HealthyAgingHandler = {
               let attributes = handlerInput.attributesManager.getSessionAttributes();
               let age = build.getSpokenValue(handlerInput.requestEnvelope, "Age");
               let gender = build.getResolvedValues(handlerInput.requestEnvelope, "Gender");
+              let goal = "";
+              if(age< 40 && gender === 'male'){
+                     goal = "MensHealth";
+              }
+              if(age >= 40 && age < 55  && params['user-gender'] === 'male'){
+                     goal = "HealthyAgingMen40";
+              }
+              if(age >= 55 && gender === 'male'){
+                     goal = "HealthyAgingMen55";
+              }
+              if(age < 40 && gender === 'female'){
+                     goal = "WomensHealth";
+              }
+              if(age >= 40 && age < 55  && gender === 'female'){
+                     goal = "HealthyAgingWomen40";
+              }
+              if(age >= 55 && gender === 'female'){
+                     goal = "HealthyAgingWomen55";
+              }
 
-              let params = {
-                'Gender' : gender,
-                'Age' : age
-              };
 
-              attributes.wellnessGoal = "HealthyAging";
+              attributes.wellnessGoal = goal;
               attributes.index = 0;
 
 
-              await build.goalsAlexa('HealthyAging', 0, params, attributes)
+              await build.goalsAlexa(goal, 0, params, attributes)
                      .then(value => {
                             console.log(value);
                             speech = value;
@@ -521,7 +536,7 @@ const ProductInfoHandler = {
                      const filter = "&filterByFormula=%7BProduct%20Name%7D%3D%22" + encodeURIComponent(resolvedValues[0].value.name) + "%22";
 
                      return new Promise((resolve) => {
-                            build.airtableGet("appYIWwhiy9nhnrww", "Master%20Products", filter, (record) => {
+                            build.airtableGet("apparAnxxgPKNtgws", "Master%20Products", filter, (record) => {
                                    console.log("AIRTABLE RECORD = " + JSON.stringify(record));
 
                                    if(attributes.disambiguation){
@@ -563,6 +578,8 @@ const ProductInfoHandler = {
               }*/
        }
 }
+
+
 
 exports.handler = Alexa.SkillBuilders.custom()
        .addRequestHandlers(

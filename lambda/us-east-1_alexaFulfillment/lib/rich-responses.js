@@ -209,7 +209,7 @@ const digestiveRich = {
                                                         }
                                                  },
                                                  {
-                                                        "title": "MegaFlora  Plus",
+                                                        "title": "MegaFlora Plus",
                                                         "description": "Traveling abroad, or just finished a course of antibiotics? Consider MegaFood  MegaFlora  Plus, our super probiotic that provides 50 billion active bacterial cultures across a proprietary blend of 14 unique probiotic strains to help support intestinal and immune health  . MegaFlora Plus is tested free from of gluten, dairy and soy. We recommend storing your MegaFlora in the fridge or freezer, and taking it once daily with a meal.",
                                                         "footer": footer,
                                                         "image": {
@@ -515,7 +515,7 @@ const immuneRich = {
                                                         }
                                                  },
                                                  {
-                                                        "title": "Turmeric Strength  for Liver",
+                                                        "title": "Turmeric Strength for Liver",
                                                         "description": "Go ahead, show your liver some love! MegaFood  Turmeric Strength  for Liver combines a powerful array of healthful compounds, whole foods and extracts that support an already healthy inflammation response of the liver  , and features real, farm fresh turmeric root from Kauai Organic Farms to deliver 300 mg of curcumin per serving  . We also added BioPerine , a patented black pepper extract that helps support the absorption of curcumin (that otherwise on its own can be hard for the body to assimilate)  , and milk thistle seed, rich in silymarin and shown to promote liver health  , while schisandra berry provides added antioxidants",
                                                         "footer": footer,
                                                         "image": {
@@ -695,7 +695,7 @@ const prenatalPostnatalRich ={
                                                         }
                                                  },
                                                  {
-                                                        "title": "MegaFlora  for Baby and Me",
+                                                        "title": "MegaFlora for Baby and Me",
                                                         "description": "Improved health for you and for baby  ! Probiotics are a top recommended supplement for expectant moms! MegaFlora  for Baby and Me  contains a broad spectrum of our proprietary blend of 14 unique strains of 20 billion probiotics, FoodState  Ginger to soothe upset tummies and support healthy digestive function  , and prebiotics, to promote the health and wellbeing of pregnant and breastfeeding women  . Probiotics support nutrient absorption, and studies have shown that intake of Lactobacillus rhamnosus (HN001) during the last trimester and early breastfeeding supports the child’s developing immune system.   All MegaFlora products are tested to be free of gluten, dairy and soy. We recommend storing your MegaFlora in the fridge or freezer, and taking it once daily with a meal.",
                                                         "footer": footer,
                                                         "image": {
@@ -712,7 +712,6 @@ const prenatalPostnatalRich ={
                      ]
               }
 };
-
 
 const sportRich = {
               "richResponse": {
@@ -762,7 +761,7 @@ const sportRich = {
                                                         }
                                                  },
                                                  {
-                                                        "title": "Turmeric Strength  for Liver",
+                                                        "title": "Turmeric Strength for Liver",
                                                         "description": "Go ahead, show your liver some love! MegaFood  Turmeric Strength  for Liver combines a powerful array of healthful compounds, whole foods and extracts that support an already healthy inflammation response of the liver  , and features real, farm fresh turmeric root from Kauai Organic Farms to deliver 300 mg of curcumin per serving. We also added BioPerine , a patented black pepper extract that helps support the absorption of curcumin , and milk thistle seed, rich in silymarin and shown to promote liver health, while schisandra berry provides added antioxidants.",
                                                         "footer": footer,
                                                         "image": {
@@ -844,7 +843,7 @@ const healthyAging = {
                                                         },
                                                  },
                                                  {
-                                                        "title": "MegaFlora  for Over 50",
+                                                        "title": "MegaFlora for Over 50",
                                                         "description": "As you age, digestion can slow down—which is why supplementing with a probiotic can be a good idea. MegaFood  MegaFlora  for Over 50 provides additional amounts of Bifidobacterium lactis (HN019) and Lactobacillus plantarum (LP115) to promote regularity, healthy bowel function and proper digestion for reduced gas and bloating,  in addition to our signature blend of 14 unique strains of probiotics and 50 billion active bacteria. FoodState  Turmeric Root helps maintain an already healthy inflammatory response of the colon, and our FoodState  Prebiotic Blend encourages the growth of healthy gut bacteria . All MegaFlora products are tested to be free of gluten, dairy and soy. We recommend storing your MegaFlora in the fridge or freezer, and taking it twice daily with food.",
                                                         "footer": "Promotes colon health, regularity and relief from gas and bloating",
                                                         "image": {
@@ -859,7 +858,7 @@ const healthyAging = {
                                                         },
                                                  },
                                                  {
-                                                        "title": "Women Over 40  One Daily",
+                                                        "title": "Women Over 40 One Daily",
                                                         "description": "What will you write in your next chapter of life? Wherever the story takes you, MegaFood  Women Over 40  One Daily will be there. It’s an easy, once-daily multi that meets your unique nutritional needs—with 4.5 mg of iron to replenish stores lost during menstruation , FoodState  B vitamins to support healthy energy production , and biotin, beta carotene and vitamins A, C and E for radiant (dare we say enviable?) hair, skin and nails . Go ahead: glow on.",
                                                         "footer": "Supports optimal health and wellbeing",
                                                         "image": {
@@ -875,7 +874,7 @@ const healthyAging = {
                                                         },
                                                  },
                                                  {
-                                                        "title": "Men Over 40  One Daily",
+                                                        "title": "Men Over 40 One Daily",
                                                         "description": "MegaFood  Men Over 40  One Daily is specifically formulated without iron to support the health and wellbeing of men over the age of 40 . (Iron is not recommended for men unless specifically directed by their healthcare practitioner.) Our multi nourishes the body in a convenient, once-daily tablet that can be taken with or without food, and includes FoodState  B vitamins to assist with already healthy cardiovascular function, healthy energy production and nervous system health . 400 IU (10 mcg) of vitamin D supports already healthy bones and mood , and an array of whole foods and herbs provide additional antioxidants and carotenoids",
                                                         "footer": "Supports optimal health and wellbeing",
                                                         "image": {
@@ -1044,7 +1043,7 @@ const womensHealth = {
                      "items": [
                             {
                                    "simpleResponse": {
-                                          "textToSpeech": "You're passionate about staying happy and healthy. We’re passionate about making the very best vitamins to support your health. Our farm-fresh supplements are made with real, nutritious, whole foods, and optimally paired with nutrients using our very own Slo-Food Process ."
+                                          "textToSpeech": "You're passionate about staying happy and healthy. We’re passionate about making the very best vitamins to support your health. Our farm-fresh supplements are made with real, nutritious, whole foods, and optimally paired with nutrients using our very own Slo-Food Process."
                                    }
                             },
                             {
@@ -1123,7 +1122,7 @@ const womensHealth = {
                                                         }
                                                  },
                                                  {
-                                                        "title": "Blood Builder  Minis",
+                                                        "title": "Blood Builder Minis",
                                                         "description": "MegaFood  Blood Builder  Minis takes everything you love about our original Blood Builder and delivers it to you in a convenient, twice-daily tablet.",
                                                         "footer": "This statement has not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure or prevent any disease.",
                                                         "image": {
