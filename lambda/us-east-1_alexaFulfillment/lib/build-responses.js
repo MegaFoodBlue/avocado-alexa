@@ -64,8 +64,7 @@ exports.getRandomGoodbye = () => {
        return "<break time='.5s'/>" + goodbyes[random];
 };
 
-exports.getSpokenValue = (envelope, slotName) =>
-       {
+exports.getSpokenValue = (envelope, slotName) => {
               if (envelope &&
                      envelope.request &&
                      envelope.request.intent &&

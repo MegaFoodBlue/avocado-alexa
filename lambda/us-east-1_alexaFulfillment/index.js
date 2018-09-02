@@ -55,7 +55,12 @@ const HelpHandler = {
        handle(handlerInput, error) {
               console.log("IN " + handlerInput.requestEnvelope.request.intent.name.toUpperCase())
               return handlerInput.responseBuilder
-                     .speak(build.randomWelcome())
+                     .speak('  There’s a lot to love about Megafood\'s vitamins and supplements.' +
+                            '  Easy-to-digest and formulated with farm fresh ingredients, they deliver optimal nutrition and support an overall sense of wellbeing.'+
+                            '  In order for me to help you find the right one, please tell me what you want to achieve.<break time="300ms"/>' +
+                            '  Want to loose weight?' + '  Or have more energy?' +
+                            '  Or provide proper nourishment to you and your loved ones?\n<break time="700ms"/>' +
+                            '  Let me know what you want and I can point you to the right supplements.')
                      .reprompt(build.randomWelcome())
                      .getResponse();
        }
