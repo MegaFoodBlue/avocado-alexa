@@ -404,26 +404,42 @@ const KidsHealthHandler = {
 
 const DefaultSupplementsHandler = {
        canHandle(handlerInput){
-              return handlerInput.requestEnvelope.request.type === "CanFulfillIntentRequest" &&
+              return handlerInput.requestEnvelope.request.type === "IntentRequest" &&
                      handlerInput.requestEnvelope.request.intent.name === "DefaultSupplements";
        },
-       handle(handlerInput, error) {
+       async handle(handlerInput, error) {
 
               let attributes = handlerInput.attributesManager.getSessionAttributes();
               const intentName = handlerInput.requestEnvelope.request.intent.name;
               const filledSlots = handlerInput.requestEnvelope.request.intent.slots;
               const slotValues = build.getSlotValues(filledSlots);
-              const resolvedValues = build.getResolvedValues(handlerInput.requestEnvelope, "wellnessgoals");
-              console.log(resolvedValues[0].value.name);
-              const wellnessgoals = resolvedValues[0].value.name;
-              let speech = build.goalsAlexa(wellnessgoals);
+              const wellnessgoals = build.getResolvedValues(handlerInput.requestEnvelope, "welllnessgoals");
+
+              console.log('getting goals for: ' +wellnessgoals);
+
+              let speech = "";
 
               attributes.wellnessGoal = wellnessgoals;
               attributes.index = 0;
 
               console.log('IN DefaultSupplementsHandler v2 ---------------------------------------- '+ JSON.stringify(slotValues));
 
-              if (slotValues.wellnessgoals.isValidated) {
+              if(wellnessgoals === undefined){
+                     speech="What are your wellness goals?"
+              } else {
+                     await build.goalsAlexa(wellnessgoals,0)
+                            .then(value => {
+                                   console.log(value);
+                                   speech = value;
+                            });
+              }
+
+              return handlerInput.responseBuilder
+                     .speak(speech)
+                     .reprompt('You can say next to hear more...  Or say goodbye to close our conversation.')
+                     .getResponse();
+
+              /*if (slotValues.wellnessgoals.isValidated) {
                      console.log ("in DefaultSupplements AboutIntentHandler YES");
                      return handlerInput.responseBuilder
                             .withCanFulfillIntent(
@@ -456,7 +472,7 @@ const DefaultSupplementsHandler = {
               return handlerInput.responseBuilder
                      .speak(speech)
                      .reprompt(speech)
-                     .getResponse();
+                     .getResponse();*/
        }
 };
 
