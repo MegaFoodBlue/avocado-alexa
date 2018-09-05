@@ -556,7 +556,7 @@ const ProductInfoHandler = {
               const resolvedValues = build.getResolvedValues(handlerInput.requestEnvelope, "product");
               const productInfo = build.getResolvedValues(handlerInput.requestEnvelope, "Info");
 
-              console.log(productInfo[0].value.name + '<--------- Product Info asked for.');
+              console.log(productInfo + ' <--------- Product Info asked for.');
               //NO MATCHES FOUND
               if (resolvedValues === undefined)
               {
@@ -568,7 +568,7 @@ const ProductInfoHandler = {
               //ONLY ONE MATCH FOUND
               else if (resolvedValues)
               {
-                     const filter = "&filterByFormula=%7BProduct%20Name%7D%3D%22" + encodeURIComponent(resolvedValues[0].value.name) + "%22";
+                     const filter = "&filterByFormula=%7BProduct%20Name%7D%3D%22" + encodeURIComponent(resolvedValues) + "%22";
 
                      return new Promise((resolve) => {
                             build.airtableGet("apparAnxxgPKNtgws", "Master%20Products", filter, (record) => {
@@ -578,14 +578,14 @@ const ProductInfoHandler = {
                                           attributes.disambiguation = false;
                                           infoRequired = attributes.infoRequired
                                    } else if (!attributes.disambiguation){
-                                          infoRequired = productInfo[0].value.name;
+                                          infoRequired = productInfo;
                                           attributes.infoRequired = infoRequired;
                                           infoString = record.records[0].fields[infoRequired];
                                    }
                                    let sanitized = infoString.replace(/&/gi,'and');
 
                                    console.log(sanitized);
-                                   let speechText = "The " + infoRequired + " for " + spokenValue + " is:  <break time='.5s'/>" + sanitized + build.randomWelcome();
+                                   let speechText = "The " + infoRequired + " for " + spokenValue + " is:  <break time='.5s'/>" + sanitized + '.  ' + build.randomWelcome();
 
                                    console.log("RESPONSE BUILDER = " + JSON.stringify(handlerInput.responseBuilder));
 
